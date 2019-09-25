@@ -38,7 +38,12 @@ public class HelloController {
         //access the Book class .getTitle() and getAuthor() to get the newBook's title and author
         String query = "INSERT into books (title, author) values(\'" + newBook.getTitle() + "\', \'"
                 + newBook.getAuthor() + "\')";
-        jdbcTemplate.update(query); // still need to figure out sanitation!
+        try {
+            jdbcTemplate.update(query);
+        } catch (RuntimeException exception) {
+            System.err.println(exception);
+            throw exception;
+        } // still need to figure out sanitation!
     }
 
     @DeleteMapping("/book/{id}")
